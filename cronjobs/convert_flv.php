@@ -1,0 +1,74 @@
+<?php
+
+//
+// SOFTWARE NAME: eZ Video FLV
+// SOFTWARE RELEASE: 0.1
+// COPYRIGHT NOTICE: Copyright (C) 2007 Damien POBEL
+// SOFTWARE LICENSE: GNU General Public License v2.0
+// NOTICE: >
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of version 2.0  of the GNU General
+//   Public License as published by the Free Software Foundation.
+//
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+//
+//   You should have received a copy of version 2.0 of the GNU General
+//   Public License along with this program; if not, write to the Free
+//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//   MA 02110-1301, USA.
+//
+
+include_once( 'kernel/classes/ezcontentcachemanager.php' );
+include_once( 'kernel/classes/ezcontentobjectattribute.php' );
+include_once( 'kernel/classes/ezclusterfilehandler.php' );
+include_once( 'lib/ezutils/classes/ezmimetype.php' );
+include_once( 'lib/ezutils/classes/ezdebug.php' );
+
+$extension_dir = eZExtension::baseDirectory();
+include_once( $extension_dir.'/ezvideoflv/datatypes/ezvideoflv/ezvideoflv.php' );
+
+
+$cli =& eZCLI::instance();
+
+$storageDir = eZSys::storageDirectory();
+$destinationDir = $storageDir . '/original/video';
+
+
+if ( in_array('-all', $_SERVER['argv'] ) )
+	$videoFiles = eZVideoFLV::fetchAll();
+else
+	$videoFiles = eZVideoFLV::fetchNotConverted();
+
+foreach( $videoFiles as $video )
+{
+	$filename = $video->attribute( 'filename' );
+	if ( $filename == '' )
+		continue ;
+	$flv = eZVideoFLV::doConvert( $video->attribute( 'filepath' ), $destinationDir );
+	if ( is_null( $flv ) )
+	{
+		eZDebug::writeError( "Can't convert " . $video->attribute( 'filepath' ) . ' to FLV', 'eZVideoFLV Cronjob' );
+		$flv = '';
+	}
+	else
+	{
+        $fileHandler = eZClusterFileHandler::instance();
+		$fileHandler->fileStore( $flvFilename, 'mediafile', true, 'video/x-flv' );
+	}
+	$video->setAttribute( 'flv', $flv );
+	$video->store();
+	$attributeID = $video->attribute( 'contentobject_attribute_id' );
+	$version = $video->attribute( 'version' );
+	$attribute = eZContentObjectAttribute::fetch( $attributeID, $version );
+	if ( is_object( $attribute ) )
+	{
+		$contentObjectID = $attribute->attribute( 'contentobject_id' );
+		eZDebug::writeDebug( 'Clearing cache for objectID: '. $contentObjectID );
+		eZContentCacheManager::clearContentCache( $contentObjectID );
+	}
+}
+
+?>
