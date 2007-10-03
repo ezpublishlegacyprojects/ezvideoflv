@@ -17,7 +17,10 @@
 	</td>
     <td>{$attribute.content.original_filename}</td>
     <td>{$attribute.content.mime_type}</td>
-    <td>{$attribute.content.filesize|si( byte )}</td>
+    <td>
+		{$attribute.content.filesize|si( byte )}<br />
+		{$attribute.content.width}x{$attribute.content.height}
+	</td>
 </tr>
 <tr>
 	<td>{'FLV version'|i18n( 'ezvideoflv/datatype' )}</td>
@@ -44,7 +47,7 @@
 
 <div class="block">
     <input type="hidden" name="MAX_FILE_SIZE" value="{$attribute.contentclass_attribute.data_int1|mul( 1024, 1024 )}" />
-    <label>{'New file for upload and convert to FLV'|i18n( 'ezvideoflv/datatype' )}:</label>
+    <label>{'New video file'|i18n( 'ezvideoflv/datatype' )}:</label>
     <input class="box" name="{$attribute_base}_data_videoflvfilename_{$attribute.id}" type="file" />
 </div>
 

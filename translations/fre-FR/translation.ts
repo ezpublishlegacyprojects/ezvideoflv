@@ -18,7 +18,7 @@
 		<translation>Pas encore généré</translation>
 	</message>
 	<message>
-		<source>New file for upload and convert to FLV</source>
+		<source>New video file</source>
 		<translation>Nouveau fichier à télécharger et à convertir en FLV</translation>
 	</message>
 	<message>
