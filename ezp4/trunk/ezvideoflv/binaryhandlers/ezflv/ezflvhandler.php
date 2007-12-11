@@ -31,7 +31,7 @@ class eZFLVHandler extends eZBinaryFileHandler
 
     function eZFLVHandler()
     {
-        $this->eZBinaryFileHandler( eZFLVHandler::FLV_ID, "PHP FLV passtrough", EZ_BINARY_FILE_HANDLE_DOWNLOAD );
+        $this->eZBinaryFileHandler( eZFLVHandler::FLV_ID, "PHP FLV passtrough", eZBinaryFileHandler::HANDLE_DOWNLOAD );
     }
 
     function handleFileDownload( $contentObject, $contentObjectAttribute, $type,
@@ -41,7 +41,7 @@ class eZFLVHandler extends eZBinaryFileHandler
 
         // VS-DBFILE
 
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
+        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( $fileName );
 
         if ( $fileName != "" and $file->exists() )
@@ -93,7 +93,7 @@ class eZFLVHandler extends eZBinaryFileHandler
 
             eZExecution::cleanExit();
         }
-        return EZ_BINARY_FILE_RESULT_UNAVAILABLE;
+        return eZBinaryFileHandler::RESULT_UNAVAILABLE;
     }
 }
 

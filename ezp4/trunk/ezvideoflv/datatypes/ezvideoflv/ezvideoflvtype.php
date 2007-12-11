@@ -79,12 +79,11 @@ class eZVideoFLVType extends eZDataType
     {
         $contentObjectAttributeID = $contentObjectAttribute->attribute( "id" );
         $mediaFiles = eZVideoFLV::fetchVideo( $contentObjectAttributeID, null );
-        $sys = eZSys::instance();
-        $storage_dir = $sys->storageDirectory();
+        $storage_dir = eZSys::storageDirectory();
         if ( $version == null )
         {
 			// delete all versions
-			require_once( 'kernel/classes/ezclusterfilehandler.php' );
+			//require_once( 'kernel/classes/ezclusterfilehandler.php' );
 			$iniVideo = eZINI::instance( 'ezvideoflv.ini' );
 			$preview_dir = $orig_dir . '/' . $iniVideo->variable( 'Preview', 'Path' );
 			$format = strtolower( $iniVideo->variable( 'Preview', 'Format' ) );
@@ -141,7 +140,7 @@ class eZVideoFLVType extends eZDataType
 					$format = strtolower( $iniVideo->variable( 'Preview', 'Format' ) );
 					$preview_file = $preview_dir . '/' . $currentFileName . '.' . $format;
                     // VS-DBFILE
-                    require_once( 'kernel/classes/ezclusterfilehandler.php' );
+                    //require_once( 'kernel/classes/ezclusterfilehandler.php' );
                     $file = eZClusterFileHandler::instance( $orig_dir . "/" . $currentFileName );
                     if ( $file->exists() )
                         $file->delete();
@@ -285,7 +284,7 @@ class eZVideoFLVType extends eZDataType
 			$media->setAttribute( "flv", $flvFile );
 
             // VS-DBFILE
-            require_once( 'kernel/classes/ezclusterfilehandler.php' );
+            //require_once( 'kernel/classes/ezclusterfilehandler.php' );
             $filePath = $mediaFile->attribute( 'filename' );
             $fileHandler = eZClusterFileHandler::instance();
             $fileHandler->fileStore( $filePath, 'media', true, $mime );
@@ -378,7 +377,7 @@ class eZVideoFLVType extends eZDataType
         $media->setAttribute( "height", $height );
 		$media->setAttribute( "flv", $flvFile );
 
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
+        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $filePath = $httpFile->attribute( 'filename' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $filePath, 'mediafile', true, $mimeData['name'] );

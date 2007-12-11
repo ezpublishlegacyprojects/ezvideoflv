@@ -30,8 +30,8 @@ class eZFLVPreviewHandler extends eZBinaryFileHandler
 
     function eZFLVPreviewHandler()
     {
-        $this->eZBinaryFileHandler( EZ_FILE_FLVPREVIEW_ID,
-						"PHP FLV Preview passtrough", EZ_BINARY_FILE_HANDLE_DOWNLOAD );
+        $this->eZBinaryFileHandler( eZFLVPreviewHandler::PREVIEW_ID,
+						"PHP FLV Preview passtrough", eZBinaryFileHandler::HANDLE_DOWNLOAD );
     }
 
     function handleFileDownload( $contentObject, $contentObjectAttribute, $type,
@@ -42,7 +42,7 @@ class eZFLVPreviewHandler extends eZBinaryFileHandler
 		$fileName = $video->attribute( 'preview' );
 
         // VS-DBFILE
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
+        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( $fileName );
 
         if ( $fileName != "" and $file->exists() )
@@ -67,7 +67,7 @@ class eZFLVPreviewHandler extends eZBinaryFileHandler
 
             eZExecution::cleanExit();
         }
-        return EZ_BINARY_FILE_RESULT_UNAVAILABLE;
+        return eZBinaryFileHandler::RESULT_UNAVAILABLE;
     }
 }
 

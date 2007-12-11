@@ -23,7 +23,7 @@
 //   MA 02110-1301, USA.
 //
 
-$extension_dir = eZExtension::baseDirectory();
+//$extension_dir = eZExtension::baseDirectory();
 
 $contentObjectID = $Params['ContentObjectID'];
 $contentObjectAttributeID = $Params['ContentObjectAttributeID'];
@@ -44,10 +44,10 @@ if ( $contentObjectID != $contentObjectIDAttr or !$contentObject->attribute( 'ca
 {
     return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 }
-$fileHandler =& eZBinaryFileHandler::instance( 'ezflv' );
-$result = $fileHandler->handleDownload( $contentObject, $contentObjectAttribute, EZ_BINARY_FILE_TYPE_FILE );
+$fileHandler = eZBinaryFileHandler::instance( 'ezflv' );
+$result = $fileHandler->handleDownload( $contentObject, $contentObjectAttribute, eZBinaryFileHandler::TYPE_FILE );
 
-if ( $result == EZ_BINARY_FILE_RESULT_UNAVAILABLE )
+if ( $result == eZBinaryFileHandler::RESULT_UNAVAILABLE )
 {
     eZDebug::writeError( "The specified file could not be found." );
     return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );

@@ -97,8 +97,7 @@ class eZVideoFLV extends eZPersistentObject
 		$fileInfo = $this->storedFileInfo();
 		if ( $fileInfo['filename'] == '' )
 			return '';
-        $sys = eZSys::instance();
-        $storage_dir = $sys->storageDirectory();
+        $storage_dir = eZSys::storageDirectory();
 		$ini = eZINI::instance( 'ezvideoflv.ini' );
 		$preview_dir = $storage_dir . '/' . $ini->variable( 'Preview', 'Path' );
 		$format = $ini->variable( 'Preview', 'Format' );
@@ -112,7 +111,7 @@ class eZVideoFLV extends eZPersistentObject
         }
         umask( $oldumask );
 
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
+        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
 		$videoFile = eZClusterFileHandler::instance( $fileInfo['filepath'] );
 		if ( ! $videoFile->exists() )
 			return '';
@@ -147,7 +146,7 @@ class eZVideoFLV extends eZPersistentObject
 		$ret = @call_user_func( $function, $gd_image, $imgPath );
 		if ( $ret )
 		{
-			require_once( 'kernel/classes/ezclusterfilehandler.php' );
+			//require_once( 'kernel/classes/ezclusterfilehandler.php' );
             $fileHandler = eZClusterFileHandler::instance();
             $fileHandler->fileStore( $imgPath, 'media', true, 'image/' . $format );
 			return $imgPath;
@@ -156,11 +155,11 @@ class eZVideoFLV extends eZPersistentObject
 		return '';
 	}
 
-	function &fileSizeFLV()
+	function fileSizeFLV()
 	{
 		$fileInfo = $this->storedFileInfo();
         // VS-DBFILE
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
+        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( $fileInfo['filepath_flv'] );
 
         if ( $file->exists() )
@@ -170,12 +169,12 @@ class eZVideoFLV extends eZPersistentObject
         return $fileSize;
 	}
 
-    function &fileSize()
+    function fileSize()
     {
         $fileInfo = $this->storedFileInfo();
 
         // VS-DBFILE
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
+        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( $fileInfo['filepath'] );
 
         if ( $file->exists() )
@@ -185,7 +184,7 @@ class eZVideoFLV extends eZPersistentObject
         return $fileSize;
     }
 
-    function &filePath()
+    function filePath()
     {
         $fileInfo = $this->storedFileInfo();
         return $fileInfo['filepath'];
@@ -251,7 +250,7 @@ class eZVideoFLV extends eZPersistentObject
         }
     }
 
-	function fetchNotConverted()
+	static function fetchNotConverted()
 	{
 		return eZPersistentObject::fetchObjectList( eZVideoFLV::definition(),
 												null,
@@ -259,7 +258,7 @@ class eZVideoFLV extends eZPersistentObject
 												);
 	}
 
-	function fetchAll()
+	static function fetchAll()
 	{
 		return eZPersistentObject::fetchObjectList( eZVideoFLV::definition() );
 	}
@@ -410,13 +409,13 @@ class eZVideoFLV extends eZPersistentObject
                       'mime_type' => $mimeType );
     }
 
-    var $ContentObjectAttributeID;
-	var $FLV;
-    var $Filename;
-    var $OriginalFilename;
-    var $MimeType;
-    var $Width;
-    var $Height;
+    public $ContentObjectAttributeID;
+	public $FLV;
+    public $Filename;
+    public $OriginalFilename;
+    public $MimeType;
+    public $Width;
+    public $Height;
 }
 
 ?>
