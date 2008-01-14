@@ -2,7 +2,7 @@
 
 //
 // SOFTWARE NAME: eZ Video FLV
-// SOFTWARE RELEASE: 0.1
+// SOFTWARE RELEASE: 0.2
 // COPYRIGHT NOTICE: Copyright (C)	1999-2006 eZ Systems AS
 // 									2007 Damien POBEL
 // BASED ON: ezbinaryfilehander.php

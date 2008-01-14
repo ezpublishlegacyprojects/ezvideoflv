@@ -2,7 +2,7 @@
 
 //
 // SOFTWARE NAME: eZ Video FLV
-// SOFTWARE RELEASE: 0.1
+// SOFTWARE RELEASE: 0.2
 // COPYRIGHT NOTICE: Copyright (C) 2007 Damien POBEL
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -26,7 +26,7 @@ class eZVideoFLVInfo
     static function info()
     {
         return array( 'Name' => "eZ Video FLV extension",
-                      'Version' => "0.1",
+                      'Version' => "0.2",
                       'Copyright' => "Copyright (C) 1999-2007 Damien POBEL",
                       'License' => "GNU General Public License v2.0",
                       'Includes the following third-party software' => array( 'Name' => 'FLV Player',

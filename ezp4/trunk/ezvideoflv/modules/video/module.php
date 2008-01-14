@@ -2,7 +2,7 @@
 
 //
 // SOFTWARE NAME: eZ Video FLV
-// SOFTWARE RELEASE: 0.1
+// SOFTWARE RELEASE: 0.2
 // COPYRIGHT NOTICE: Copyright (C) 2007 Damien POBEL
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
