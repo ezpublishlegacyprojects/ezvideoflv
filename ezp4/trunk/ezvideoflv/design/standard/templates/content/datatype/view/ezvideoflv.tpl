@@ -15,7 +15,7 @@
 		<object type="application/x-shockwave-flash" data={$player|ezdesign()} width="{$width}" height="{$height}">
 			<param name="movie" value={$player|ezdesign()} />
 			<param name="allowFullScreen" value="true" />
-			<param name="FlashVars" value="flv={$flv|ezurl('no')}&amp;startimage={$preview|ezroot('no')}{$opt_string}" />
+			<param name="FlashVars" value="flv={$flv|ezurl('no')}&amp;startimage={$preview|ezurl('no')}{$opt_string}" />
 		</object>
 	{else}
 	<p>{'FLV version not yet generated'|i18n( 'ezvideoflv/datatype' )}
