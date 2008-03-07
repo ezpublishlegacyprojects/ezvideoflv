@@ -4,7 +4,7 @@
 // SOFTWARE NAME: eZ Video FLV
 // SOFTWARE RELEASE: 0.2
 // COPYRIGHT NOTICE: Copyright (C) 1999-2006 eZ Systems AS
-// 								   2007 Damien POBEL
+//                                    2007 Damien POBEL
 // BASED ON: ezmediatype.php from eZ Publish 3.10rc1
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -82,11 +82,11 @@ class eZVideoFLVType extends eZDataType
         $storage_dir = eZSys::storageDirectory();
         if ( $version == null )
         {
-			// delete all versions
-			//require_once( 'kernel/classes/ezclusterfilehandler.php' );
-			$iniVideo = eZINI::instance( 'ezvideoflv.ini' );
-			$preview_dir = $orig_dir . '/' . $iniVideo->variable( 'Preview', 'Path' );
-			$format = strtolower( $iniVideo->variable( 'Preview', 'Format' ) );
+            // delete all versions
+            //require_once( 'kernel/classes/ezclusterfilehandler.php' );
+            $iniVideo = eZINI::instance( 'ezvideoflv.ini' );
+            $preview_dir = $orig_dir . '/' . $iniVideo->variable( 'Preview', 'Path' );
+            $format = strtolower( $iniVideo->variable( 'Preview', 'Format' ) );
 
             foreach ( $mediaFiles as $mediaFile )
             {
@@ -96,18 +96,18 @@ class eZVideoFLVType extends eZDataType
 
                 $fileName = $mediaFile->attribute( "filename" );
                 if ( $fileName != '' )
-				{
-					// VS-DBFILE
-					$file = eZClusterFileHandler::instance( $orig_dir . "/" . $fileName );
-					if ( $file->exists() )
-						$file->delete();
-					$preview_file = $preview_dir . '/' . $fileName . '.' . $format;
-					$file = eZClusterFileHandler::instance( $preview_file );
-					if ( $file->exists() )
-						$file->delete();
-				}
+                {
+                    // VS-DBFILE
+                    $file = eZClusterFileHandler::instance( $orig_dir . "/" . $fileName );
+                    if ( $file->exists() )
+                        $file->delete();
+                    $preview_file = $preview_dir . '/' . $fileName . '.' . $format;
+                    $file = eZClusterFileHandler::instance( $preview_file );
+                    if ( $file->exists() )
+                        $file->delete();
+                }
 
-				$fileNameFLV = $mediaFile->attribute( 'flv' );
+                $fileNameFLV = $mediaFile->attribute( 'flv' );
                 if ( $fileNameFLV == '' )
                     continue;
                 $fileflv = eZClusterFileHandler::instance( $orig_dir . "/" . $fileNameFLV );
@@ -123,22 +123,22 @@ class eZVideoFLVType extends eZDataType
             {
                 $mimeType =  $currentBinaryFile->attribute( "mime_type" );
                 $currentFileName = $currentBinaryFile->attribute( "filename" );
-				$currentFileNameFLV = $currentBinaryFile->attribute( 'flv' );
+                $currentFileNameFLV = $currentBinaryFile->attribute( 'flv' );
                 list( $prefix, $suffix ) = is_string( $mimeType ) && $mimeType ? split ( '[/]', $mimeType ) : array( null, null );
                 $orig_dir = $storage_dir . '/original/' . $prefix;
                 foreach ( $mediaFiles as $mediaFile )
                 {
                     $fileName = $mediaFile->attribute( "filename" );
-					$fileNameFLV = $mediaFile->attribute( 'flv' );
+                    $fileNameFLV = $mediaFile->attribute( 'flv' );
                     if( ( $currentFileName == $fileName ) && ( $currentFileNameFLV == $fileNameFLV ) )
                         $count += 1;
                 }
                 if ( $count == 1 && $currentFileName != '' && $currentFileNameFLV != '' )
                 {
-					$iniVideo = eZINI::instance( 'ezvideoflv.ini' );
-					$preview_dir = $orig_dir . '/' . $iniVideo->variable( 'Preview', 'Path' );
-					$format = strtolower( $iniVideo->variable( 'Preview', 'Format' ) );
-					$preview_file = $preview_dir . '/' . $currentFileName . '.' . $format;
+                    $iniVideo = eZINI::instance( 'ezvideoflv.ini' );
+                    $preview_dir = $orig_dir . '/' . $iniVideo->variable( 'Preview', 'Path' );
+                    $format = strtolower( $iniVideo->variable( 'Preview', 'Format' ) );
+                    $preview_file = $preview_dir . '/' . $currentFileName . '.' . $format;
                     // VS-DBFILE
                     //require_once( 'kernel/classes/ezclusterfilehandler.php' );
                     $file = eZClusterFileHandler::instance( $orig_dir . "/" . $currentFileName );
@@ -147,9 +147,9 @@ class eZVideoFLVType extends eZDataType
                     $file = eZClusterFileHandler::instance( $orig_dir . "/" . $currentFileNameFLV );
                     if ( $file->exists() )
                         $file->delete();
-					$file = eZClusterFileHandler::instance( $preview_file );
-					if ( $file->exists() )
-						$file->delete();
+                    $file = eZClusterFileHandler::instance( $preview_file );
+                    if ( $file->exists() )
+                        $file->delete();
                 }
             }
         }
@@ -271,25 +271,25 @@ class eZVideoFLVType extends eZDataType
             $media->setAttribute( "mime_type", $mime );
 
 
-			$ffmpeg = eZVideoFLV::getFFMPEGObject( $mediaFile->attribute( "filename" ) );
-			$width = $ffmpeg->getFrameWidth();
-			$height = $ffmpeg->getFrameHeight();
-			$media->setAttribute( "width", $width );
-			$media->setAttribute( "height", $height );
+            $ffmpeg = eZVideoFLV::getFFMPEGObject( $mediaFile->attribute( "filename" ) );
+            $width = $ffmpeg->getFrameWidth();
+            $height = $ffmpeg->getFrameHeight();
+            $media->setAttribute( "width", $width );
+            $media->setAttribute( "height", $height );
 
-			$flvFile = eZVideoFLV::convert( $mediaFile->attribute( 'filename'), $orig_dir );
-			if ( is_null( $flvFile ) )
-				$flvFile = '';
+            $flvFile = eZVideoFLV::convert( $mediaFile->attribute( 'filename'), $orig_dir );
+            if ( is_null( $flvFile ) )
+                $flvFile = '';
 
-			$media->setAttribute( "flv", $flvFile );
+            $media->setAttribute( "flv", $flvFile );
 
             // VS-DBFILE
             //require_once( 'kernel/classes/ezclusterfilehandler.php' );
             $filePath = $mediaFile->attribute( 'filename' );
             $fileHandler = eZClusterFileHandler::instance();
             $fileHandler->fileStore( $filePath, 'media', true, $mime );
-			if ( $flvFile != '' )
-				$fileHandler->fileStore( $flvFile, 'media', true, 'video/x-flv' );
+            if ( $flvFile != '' )
+                $fileHandler->fileStore( $flvFile, 'media', true, 'video/x-flv' );
         }
 
         $media->store();
@@ -364,28 +364,28 @@ class eZVideoFLVType extends eZDataType
         $media->setAttribute( "filename", basename( $httpFile->attribute( "filename" ) ) );
         $media->setAttribute( "original_filename", $httpFile->attribute( "original_filename" ) );
         $media->setAttribute( "mime_type", $mimeData['name'] );
-		$flvFile = eZVideoFLV::convert( $httpFile->attribute( 'filename' ), dirname( $httpFile->attribute( 'filename' ) ) );
-		if ( is_null( $flvFile ) )
-			$flvFile = '';
+        $flvFile = eZVideoFLV::convert( $httpFile->attribute( 'filename' ), dirname( $httpFile->attribute( 'filename' ) ) );
+        if ( is_null( $flvFile ) )
+            $flvFile = '';
 
 
-		$ffmpeg = eZVideoFLV::getFFMPEGObject( $http->attribute( 'filename' ) );
+        $ffmpeg = eZVideoFLV::getFFMPEGObject( $http->attribute( 'filename' ) );
         $width = $ffmpeg->getFrameWidth();
-		$height = $ffmpeg->getFrameHeight();
+        $height = $ffmpeg->getFrameHeight();
 
         $media->setAttribute( "width", $width );
         $media->setAttribute( "height", $height );
-		$media->setAttribute( "flv", $flvFile );
+        $media->setAttribute( "flv", $flvFile );
 
         //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $filePath = $httpFile->attribute( 'filename' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $filePath, 'mediafile', true, $mimeData['name'] );
-		if ( $flvFile != '' )
-		{
-			$flvPath = dirname( $httpFile->attribute( 'filename' ) ). '/' . $flvFile;
-			$fileHandler->fileStore( $flvPath, 'mediafile', true, 'video/x-flv' );
-		}
+        if ( $flvFile != '' )
+        {
+            $flvPath = dirname( $httpFile->attribute( 'filename' ) ). '/' . $flvFile;
+            $fileHandler->fileStore( $flvPath, 'mediafile', true, 'video/x-flv' );
+        }
 
 
         $media->store();
@@ -416,7 +416,7 @@ class eZVideoFLVType extends eZDataType
         $storageDir = eZSys::storageDirectory();
         list( $group, $type ) = explode( '/', $mimeData['name'] );
         $destination = $storageDir . '/original/' . $group;
-		$destinationFLV = $destination;
+        $destinationFLV = $destination;
         $oldumask = umask( 0 );
         if ( !eZDir::mkdir( $destination, false, true ) )
         {
@@ -437,16 +437,16 @@ class eZVideoFLVType extends eZDataType
         $destination = $destination . '/' . md5( $fileBaseName . microtime() . mt_rand() ) . $fileSuffix;
 
         copy( $filePath, $destination );
-		$flvFile = eZVideoFLV::convert( $destination, $destinationFLV );
+        $flvFile = eZVideoFLV::convert( $destination, $destinationFLV );
 
         // SP-DBFILE
         require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $destination, 'mediafile', true, $mimeData['name'] );
-		if ( !is_null( $flvFile ) )
-			$fileHandler->fileStore( $destinationFLV.'/'.$flvFile, 'mediafile', true, 'video/x-flv' );
-		else
-			$flvFile = '';
+        if ( !is_null( $flvFile ) )
+            $fileHandler->fileStore( $destinationFLV.'/'.$flvFile, 'mediafile', true, 'video/x-flv' );
+        else
+            $flvFile = '';
 
         $classAttribute =& $objectAttribute->contentClassAttribute();
 
@@ -455,11 +455,11 @@ class eZVideoFLVType extends eZDataType
         $media->setAttribute( "filename", basename( $destination ) );
         $media->setAttribute( "original_filename", $fileName );
         $media->setAttribute( "mime_type", $mimeData['name'] );
-		$media->setAttribute( "flv", $flvFile );
+        $media->setAttribute( "flv", $flvFile );
 
-		$ffmpeg = eZVideoFLV::getFFMPEGObject( $destination );
+        $ffmpeg = eZVideoFLV::getFFMPEGObject( $destination );
         $width = $ffmpeg->getFrameWidth();
-		$height = $ffmpeg->getFrameHeight();
+        $height = $ffmpeg->getFrameHeight();
 
         $media->setAttribute( "width", $width );
         $media->setAttribute( "height", $height );
@@ -648,11 +648,11 @@ class eZVideoFLVType extends eZDataType
         }
 
         $fileKey = md5( mt_rand() );
-		$fileKeyFLV = md5( mt_rand().'flv' );
+        $fileKeyFLV = md5( mt_rand().'flv' );
 
         $fileInfo = $mediaFile->storedFileInfo();
         $package->appendSimpleFile( $fileKey, $fileInfo['filepath'] );
-		$package->appendSimpleFile( $fileKeyFLV, $fileInfo['filepath_flv'] );
+        $package->appendSimpleFile( $fileKeyFLV, $fileInfo['filepath_flv'] );
 
         $mediaNode = eZDOMDocument::createElementNode( 'videoflv-file' );
         $mediaNode->appendAttribute( eZDOMDocument::createAttributeNode( 'filesize', $mediaFile->attribute( 'filesize' ) ) );
@@ -710,7 +710,7 @@ class eZVideoFLVType extends eZDataType
         {
             $basename = substr( md5( mt_rand() ), 0, 8 ) . '.' . eZFile::suffix( $mediaNode->attributeValue( 'filename' ) );
         }
-		$basenameFLV = '';
+        $basenameFLV = '';
         while ( file_exists( $destinationPath . $basenameFLV ) )
         {
             $basenameFLV = substr( md5( mt_rand() ), 0, 8 ) . '.flv';
