@@ -3,8 +3,8 @@
 //
 // SOFTWARE NAME: eZ Video FLV
 // SOFTWARE RELEASE: 0.2
-// COPYRIGHT NOTICE: Copyright (C)	1999-2006 eZ Systems AS
-// 									2007 Damien POBEL
+// COPYRIGHT NOTICE: Copyright (C)    1999-2006 eZ Systems AS
+//                                     2007 Damien POBEL
 // BASED ON: ezbinaryfilehander.php
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -50,7 +50,7 @@ class eZFLVHandler extends eZBinaryFileHandler
             $fileSize = $file->size();
             $mimeType =  'video/x-flv';
             $originalFileName = $fileInfo['original_filename'];
-			$flvFileName = str_replace( eZFile::suffix( $originalFileName ), 'flv', $originalFileName );
+            $flvFileName = str_replace( eZFile::suffix( $originalFileName ), 'flv', $originalFileName );
             $contentLength = $fileSize;
             $fileOffset = false;
             $fileLength = false;
@@ -76,7 +76,7 @@ class eZFLVHandler extends eZBinaryFileHandler
             header( "Last-Modified: ". gmdate( 'D, d M Y H:i:s T', $fileModificationTime ) . ' GMT' );
             header( "Content-Length: $contentLength" );
             header( "Content-Type: $mimeType" );
-            header( "X-Powered-By: eZ publish" );
+            header( "X-Powered-By: eZ Publish" );
             header( "Content-disposition: attachment; filename=\"$flvFileName\"" );
             header( "Content-Transfer-Encoding: binary" );
             header( "Accept-Ranges: bytes" );

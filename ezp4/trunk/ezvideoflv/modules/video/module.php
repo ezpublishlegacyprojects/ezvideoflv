@@ -27,14 +27,14 @@ $Module = array( 'name' => 'eZVideoFLV',
 $ViewList = array();
 $ViewList['flv'] = array(
     'script' => 'flv.php',
-	'params' => array( 'ContentObjectID', 'ContentObjectAttributeID' ),
-	'functions' => array( 'read' )
-	);
+    'params' => array( 'ContentObjectID', 'ContentObjectAttributeID' ),
+    'functions' => array( 'read' )
+    );
 $ViewList['preview'] = array(
     'script' => 'preview.php',
-	'params' => array( 'ContentObjectID', 'ContentObjectAttributeID' ),
-	'functions' => array( 'read' )
-	);
+    'params' => array( 'ContentObjectID', 'ContentObjectAttributeID' ),
+    'functions' => array( 'read' )
+    );
 
 
 $FunctionList['read'] = array();

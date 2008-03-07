@@ -3,8 +3,8 @@
 //
 // SOFTWARE NAME: eZ Video FLV
 // SOFTWARE RELEASE: 0.2
-// COPYRIGHT NOTICE: Copyright (C)	1999-2006 eZ Systems AS
-// 									2007 Damien POBEL
+// COPYRIGHT NOTICE: Copyright (C)    1999-2006 eZ Systems AS
+//                                     2007 Damien POBEL
 // BASED ON: ezbinaryfilehander.php
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -31,15 +31,15 @@ class eZFLVPreviewHandler extends eZBinaryFileHandler
     function eZFLVPreviewHandler()
     {
         $this->eZBinaryFileHandler( eZFLVPreviewHandler::PREVIEW_ID,
-						"PHP FLV Preview passtrough", eZBinaryFileHandler::HANDLE_DOWNLOAD );
+                        "PHP FLV Preview passtrough", eZBinaryFileHandler::HANDLE_DOWNLOAD );
     }
 
     function handleFileDownload( $contentObject, $contentObjectAttribute, $type,
                                  $fileInfo )
     {
-		$video = eZVideoFLV::fetchVideo( $contentObjectAttribute->attribute( 'id' ),
-									$contentObjectAttribute->attribute( 'version' ) );
-		$fileName = $video->attribute( 'preview' );
+        $video = eZVideoFLV::fetchVideo( $contentObjectAttribute->attribute( 'id' ),
+                                    $contentObjectAttribute->attribute( 'version' ) );
+        $fileName = $video->attribute( 'preview' );
 
         // VS-DBFILE
         //require_once( 'kernel/classes/ezclusterfilehandler.php' );
@@ -49,7 +49,7 @@ class eZFLVPreviewHandler extends eZBinaryFileHandler
         {
             $file->fetch();
             $fileSize = $file->size();
-			$mimeData = eZMimeType::findByFileContents( $fileName );
+            $mimeData = eZMimeType::findByFileContents( $fileName );
             $mimeType = $mimeData['name'];
             $contentLength = $fileSize;
             $fileModificationTime = filemtime( $fileName );
@@ -58,7 +58,7 @@ class eZFLVPreviewHandler extends eZBinaryFileHandler
             header( "Last-Modified: ". gmdate( 'D, d M Y H:i:s T', $fileModificationTime ) . ' GMT' );
             header( "Content-Length: $contentLength" );
             header( "Content-Type: $mimeType" );
-            header( "X-Powered-By: eZ publish" );
+            header( "X-Powered-By: eZ Publish" );
 
             $fh = fopen( "$fileName", "rb" );
             ob_end_clean();

@@ -4,7 +4,7 @@
 // SOFTWARE NAME: eZ Video FLV
 // SOFTWARE RELEASE: 0.2
 // COPYRIGHT NOTICE: Copyright (C)    1999-2006 eZ Systems AS
-//                                     2007 Damien POBEL
+//                                    2007 Damien POBEL
 // BASED ON: ezmedia.php
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -93,7 +93,7 @@ class eZVideoFLV extends eZPersistentObject
                       "relations" => array( "contentobject_attribute_id" => array( "class" => "ezcontentobjectattribute",
                                                                                    "field" => "id" ),
                                             "version" => array( "class" => "ezcontentobjectattribute",
-                                                                "field" => "version" )),
+                                                                "field" => "version" ) ),
                       "class_name" => "eZVideoFLV",
                       "name" => "ezvideoflv" );
     }
@@ -138,10 +138,10 @@ class eZVideoFLV extends eZPersistentObject
 
     function generatePreview( $imgPath, $videoFile, $format, $frame)
     {
-        $function = 'image'.$format;
+        $function = 'image' . $format;
         if ( !function_exists( $function ) )
             return '';
-        eZDebug::writeDebug( 'Generating preview for '.$videoFile );
+        eZDebug::writeDebug( 'Generating preview for ' . $videoFile );
         $ffmpeg = eZVideoFLV::getFFMPEGObject( $videoFile );
         $frame_count = $ffmpeg->getFrameCount() - 1;
         $frame_number = 1;
@@ -152,7 +152,7 @@ class eZVideoFLV extends eZPersistentObject
         }
         else
             $frame_number = ceil( $frame_count / 2 );
-        eZDebug::writeDebug( 'Using frame '.$frame_number, 'eZVideoFLV' );
+        eZDebug::writeDebug( 'Using frame ' . $frame_number, 'eZVideoFLV' );
         $frame = $ffmpeg->getFrame( $frame_number );
         $gd_image = $frame->toGDImage();
         $ret = @call_user_func( $function, $gd_image, $imgPath );
@@ -265,9 +265,8 @@ class eZVideoFLV extends eZPersistentObject
     static function fetchNotConverted()
     {
         return eZPersistentObject::fetchObjectList( eZVideoFLV::definition(),
-                                                null,
-                                                array( "flv" => '' )
-                                                );
+                                                    null,
+                                                    array( "flv" => '' ) );
     }
 
     static function fetchAll()
@@ -327,8 +326,8 @@ class eZVideoFLV extends eZPersistentObject
         $file = eZClusterFileHandler::instance( $videoFile );
         if ( !$file->exists() )
             return null;
-        $videoSize = $file->size() / ( 1024*1024 );
-        eZDebug::writeDebug( 'Video size: '.$videoSize. ' useCronjobSize: '.$useCronjobSize, 'eZVideoFLV' );
+        $videoSize = $file->size() / ( 1024 * 1024 );
+        eZDebug::writeDebug( 'Video size: ' . $videoSize . ' useCronjobSize: ' . $useCronjobSize, 'eZVideoFLV' );
         if ( !is_numeric( $useCronjobSize ) || ( $videoSize <= $useCronjobSize ) )
             return eZVideoFLV::doConvert( $videoFile, $destinationPath );
         eZDebug::writeDebug( 'Conversion deferred to cron', 'eZVideoFLV' );
@@ -341,7 +340,7 @@ class eZVideoFLV extends eZPersistentObject
      */
     static function doConvert( $videoFile, $destinationPath )
     {
-        eZDebug::writeDebug( 'Call to doConvert('.$videoFile.', '.$destinationPath.')', 'eZVideoFLV' );
+        eZDebug::writeDebug( 'Call to doConvert(' . $videoFile . ', ' . $destinationPath . ')', 'eZVideoFLV' );
         $file = eZClusterFileHandler::instance( $videoFile );
         if ( ! $file->exists() )
             return null;
@@ -353,18 +352,18 @@ class eZVideoFLV extends eZPersistentObject
         if ( $mimeData['name'] == 'video/x-flv' )
         {
             // already a flv file
-            eZDebug::writeNotice( 'The file '.$videoFile.' is already a flv file', 'eZVideoFLV' );
+            eZDebug::writeNotice( 'The file ' . $videoFile . ' is already a flv file', 'eZVideoFLV' );
             return basename( $videoFile );
         }
-        $flvFile = md5( mt_rand() . microtime() ).'.flv';
-        $flvFileFullPath = $destinationPath.'/'.$flvFile;
+        $flvFile = md5( mt_rand() . microtime() ) . '.flv';
+        $flvFileFullPath = $destinationPath . '/' . $flvFile;
         $commandLine = eZVideoFLV::buildCommandLine( $videoFile, $flvFileFullPath );
         $retCode = 0;
-        eZDebug::writeDebug( 'Execute '.$commandLine, 'eZVideoFLV' );
+        eZDebug::writeDebug( 'Execute ' . $commandLine, 'eZVideoFLV' );
         $output = system( $commandLine, $retCode );
         if ( $retCode != 0 )
         {
-            eZDebug::writeError( 'Failed to execute ' . $commandLine."\nOutput:\n".$output, "eZVideoFLV" );
+            eZDebug::writeError( 'Failed to execute ' . $commandLine . "\nOutput:\n" . $output, "eZVideoFLV" );
             return null;
         }
         return $flvFile;
@@ -400,7 +399,7 @@ class eZVideoFLV extends eZPersistentObject
         $flv      = $this->attribute( 'flv' );
         $mimeType = $this->attribute( 'mime_type' );
         $originalFileName = $this->attribute( 'original_filename' );
-        $has_flv  = ( $flv != '' );
+        $hasFLV  = ( $flv != '' );
 
         $storageDir = eZSys::storageDirectory();
 
@@ -414,52 +413,52 @@ class eZVideoFLV extends eZPersistentObject
 
         return array( 'filename' => $fileName,
                       'flv' => $flv,
-                      'has_flv' => $has_flv,
+                      'has_flv' => $hasFLV,
                       'original_filename' => $originalFileName,
                       'filepath' => $filePath,
                       'filepath_flv' => $filePathFLV,
                       'mime_type' => $mimeType );
     }
     
-    static function generateMetadata($file)
+    static function generateMetadata( $file )
     {
         $metadata = false;
-            if ( file_exists($file) )
+        if ( file_exists( $file ) )
         {
-              $ffmpeg = eZVideoFLV::getFFMPEGObject( $file );
-          eZDebug::writeDebug( $ffmpeg );
-          $metadata['duration']           = $ffmpeg->getDuration();
-          $metadata['frame_count']        = $ffmpeg->getFrameCount();
-          $metadata['frame_rate']         = $ffmpeg->getFrameRate();
-          $metadata['comment']            = $ffmpeg->getComment();
-          $metadata['title']              = $ffmpeg->getTitle();
-          $metadata['author']             = $ffmpeg->getAuthor();
-          $metadata['copyright']          = $ffmpeg->getCopyright();
-          $metadata['frame_height']       = $ffmpeg->getFrameHeight();
-          $metadata['frame_width']        = $ffmpeg->getFrameWidth();
-          $metadata['pixel_format']       = $ffmpeg->getPixelFormat();
-          $metadata['bit_rate']           = $ffmpeg->getBitRate();
-          $metadata['video_bit_rate']     = $ffmpeg->getVideoBitRate();
-          $metadata['video_codec']        = $ffmpeg->getVideoCodec();
-          $metadata['has_audio']          = $ffmpeg->hasAudio();
-          $metadata['audio_bit_rate']     = $metadata['has_audio'] ? $ffmpeg->getAudioBitRate() : false;
-          $metadata['audio_sample_rate']  = $metadata['has_audio'] ? $ffmpeg->getAudioSampleRate() : false;
-          $metadata['audio_codec']        = $metadata['has_audio'] ? $ffmpeg->getAudioCodec() : false;
-          $metadata['audio_channels']     = $metadata['has_audio'] ? $ffmpeg->getAudioChannels() : false;
+            $ffmpeg = eZVideoFLV::getFFMPEGObject( $file );
+            eZDebug::writeDebug( $ffmpeg );
+            $metadata['duration']           = $ffmpeg->getDuration();
+            $metadata['frame_count']        = $ffmpeg->getFrameCount();
+            $metadata['frame_rate']         = $ffmpeg->getFrameRate();
+            $metadata['comment']            = $ffmpeg->getComment();
+            $metadata['title']              = $ffmpeg->getTitle();
+            $metadata['author']             = $ffmpeg->getAuthor();
+            $metadata['copyright']          = $ffmpeg->getCopyright();
+            $metadata['frame_height']       = $ffmpeg->getFrameHeight();
+            $metadata['frame_width']        = $ffmpeg->getFrameWidth();
+            $metadata['pixel_format']       = $ffmpeg->getPixelFormat();
+            $metadata['bit_rate']           = $ffmpeg->getBitRate();
+            $metadata['video_bit_rate']     = $ffmpeg->getVideoBitRate();
+            $metadata['video_codec']        = $ffmpeg->getVideoCodec();
+            $metadata['has_audio']          = $ffmpeg->hasAudio();
+            $metadata['audio_bit_rate']     = $metadata['has_audio'] ? $ffmpeg->getAudioBitRate() : false;
+            $metadata['audio_sample_rate']  = $metadata['has_audio'] ? $ffmpeg->getAudioSampleRate() : false;
+            $metadata['audio_codec']        = $metadata['has_audio'] ? $ffmpeg->getAudioCodec() : false;
+            $metadata['audio_channels']     = $metadata['has_audio'] ? $ffmpeg->getAudioChannels() : false;
         }
         return $metadata;
     }
 
     function getDuration()
     {
-        $duration =  ezi18n( 'kernel/classes/datatypes',"Unable to determine duration" );
-        $metadata = $this->attribute('metadata');
-        if ($metadata && is_array($metadata) && isset( $metadata['duration'] ) )
-          $duration = eZVideoFLV::sec2hms($metadata['duration']);
+        $duration = ezi18n( 'kernel/classes/datatypes', "Unable to determine duration" );
+        $metadata = $this->attribute( 'metadata' );
+        if ($metadata && is_array( $metadata ) && isset( $metadata['duration'] ) )
+          $duration = eZVideoFLV::sec2hms( $metadata['duration'] );
         return $duration;
     }
 
-    static function sec2hms ($sec, $padHours = false) 
+    static function sec2hms ($sec, $padHours = false )
     {
 
         // holds formatted string
@@ -468,28 +467,28 @@ class eZVideoFLV extends eZPersistentObject
         // there are 3600 seconds in an hour, so if we
         // divide total seconds by 3600 and throw away
         // the remainder, we've got the number of hours
-        $hours = intval(intval($sec) / 3600); 
+        $hours = intval( intval( $sec ) / 3600 ); 
 
         // add to $hms, with a leading 0 if asked for
-        $hms .= ($padHours) 
-              ? str_pad($hours, 2, "0", STR_PAD_LEFT). ':'
-              : $hours. ':';
+        $hms .= ( $padHours ) 
+              ? str_pad( $hours, 2, "0", STR_PAD_LEFT ) . ':'
+              : $hours . ':';
      
         // dividing the total seconds by 60 will give us
         // the number of minutes, but we're interested in 
         // minutes past the hour: to get that, we need to 
         // divide by 60 again and keep the remainder
-        $minutes = intval(($sec / 60) % 60); 
+        $minutes = intval( ( $sec / 60 ) % 60 );
 
         // then add to $hms (with a leading 0 if needed)
-        $hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ':';
+        $hms .= str_pad( $minutes, 2, "0", STR_PAD_LEFT ) . ':';
 
         // seconds are simple - just divide the total
         // seconds by 60 and keep the remainder
-        $seconds = intval($sec % 60); 
+        $seconds = intval( $sec % 60 ); 
 
         // add to $hms, again with a leading 0 if needed
-        $hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
+        $hms .= str_pad( $seconds, 2, "0", STR_PAD_LEFT );
 
         // done!
         return $hms;
