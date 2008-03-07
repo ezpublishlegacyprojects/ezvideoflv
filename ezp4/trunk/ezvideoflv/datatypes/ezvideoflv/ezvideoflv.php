@@ -74,6 +74,10 @@ class eZVideoFLV extends eZPersistentObject
                                          "height" => array( 'name' => "Height",
                                                             'datatype' => 'integer',
                                                             'default' => 0,
+                                                            'required' => true ),
+                                         "serialized_metadata" => array( 'name' => "SerializedMetadata",
+                                                            'datatype' => 'string',
+                                                            'default' => '',
                                                             'required' => true ) ),
                       "keys" => array( "contentobject_attribute_id", "version" ),
                       'function_attributes' => array( 'filesize' => 'filesize',
@@ -83,7 +87,8 @@ class eZVideoFLV extends eZPersistentObject
                                                       'preview' => 'preview',
                                                       'has_flv' => 'hasflv',
                                                       'mime_type_category' => 'mimeTypeCategory',
-                                                      'mime_type_part' => 'mimeTypePart' ),
+                                                      'mime_type_part' => 'mimeTypePart',
+                                                      'metadata' => 'getMetadata'),
                       "relations" => array( "contentobject_attribute_id" => array( "class" => "ezcontentobjectattribute",
                                                                                    "field" => "id" ),
                                             "version" => array( "class" => "ezcontentobjectattribute",
@@ -92,6 +97,15 @@ class eZVideoFLV extends eZPersistentObject
                       "name" => "ezvideoflv" );
     }
 
+<<<<<<< HEAD:datatypes/ezvideoflv/ezvideoflv.php
+=======
+    function getMetadata()
+    {
+        $attrValue = unserialize( $this->attribute( 'serialized_metadata') ) ;
+        return $attrValue;
+    }
+
+>>>>>>> added metadata storage support:datatypes/ezvideoflv/ezvideoflv.php
     function preview()
     {
         $fileInfo = $this->storedFileInfo();
@@ -407,6 +421,35 @@ class eZVideoFLV extends eZPersistentObject
                       'filepath' => $filePath,
                       'filepath_flv' => $filePathFLV,
                       'mime_type' => $mimeType );
+    }
+    
+    static function generateMetadata($file)
+    {
+        $metadata = false;
+            if ( file_exists($file) )
+        {
+              $ffmpeg = eZVideoFLV::getFFMPEGObject( $file );
+          eZDebug::writeDebug( $ffmpeg );
+          $metadata['duration']           = $ffmpeg->getDuration();
+          $metadata['frame_count']        = $ffmpeg->getFrameCount();
+          $metadata['frame_rate']         = $ffmpeg->getFrameRate();
+          $metadata['comment']            = $ffmpeg->getComment();
+          $metadata['title']              = $ffmpeg->getTitle();
+          $metadata['author']             = $ffmpeg->getAuthor();
+          $metadata['copyright']          = $ffmpeg->getCopyright();
+          $metadata['frame_height']       = $ffmpeg->getFrameHeight();
+          $metadata['frame_width']        = $ffmpeg->getFrameWidth();
+          $metadata['pixel_format']       = $ffmpeg->getPixelFormat();
+          $metadata['bit_rate']           = $ffmpeg->getBitRate();
+          $metadata['video_bit_rate']     = $ffmpeg->getVideoBitRate();
+          $metadata['video_codec']        = $ffmpeg->getVideoCodec();
+          $metadata['has_audio']          = $ffmpeg->hasAudio();
+          $metadata['audio_bit_rate']     = $metadata['has_audio'] ? $ffmpeg->getAudioBitRate() : false;
+          $metadata['audio_sample_rate']  = $metadata['has_audio'] ? $ffmpeg->getAudioSampleRate() : false;
+          $metadata['audio_codec']        = $metadata['has_audio'] ? $ffmpeg->getAudioCodec() : false;
+          $metadata['audio_channels']     = $metadata['has_audio'] ? $ffmpeg->getAudioChannels() : false;
+        }
+        return $metadata;
     }
 
     public $ContentObjectAttributeID;

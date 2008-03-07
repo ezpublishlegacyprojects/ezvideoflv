@@ -7,6 +7,7 @@ CREATE TABLE ezvideoflv (
   original_filename varchar(255) NOT NULL default '',
   version int(11) NOT NULL default '0',
   width int(11) default NULL,
+  serialized_metadata text default '',
   PRIMARY KEY  (contentobject_attribute_id,version)
 );
 

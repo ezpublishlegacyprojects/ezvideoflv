@@ -271,11 +271,28 @@ class eZVideoFLVType extends eZDataType
             $media->setAttribute( "mime_type", $mime );
 
 
+<<<<<<< HEAD:datatypes/ezvideoflv/ezvideoflvtype.php
             $ffmpeg = eZVideoFLV::getFFMPEGObject( $mediaFile->attribute( "filename" ) );
             $width = $ffmpeg->getFrameWidth();
             $height = $ffmpeg->getFrameHeight();
             $media->setAttribute( "width", $width );
             $media->setAttribute( "height", $height );
+=======
+//			$ffmpeg = eZVideoFLV::getFFMPEGObject( $mediaFile->attribute( "filename" ) );
+      $metadata = eZVideoFLV::generateMetadata( $mediaFile->attribute( "filename" ) );
+ 
+      if ($metadata)
+      {
+    			$media->setAttribute( "width", $metadata['frame_width'] );
+	    		$media->setAttribute( "height", $metadata['frame_height'] );
+	    		$media->setAttribute( "serialized_metadata", serialize($metadata) );
+      }
+      else
+      {
+          eZDebug::writeError( "Failed to generate metadat for: " . $mediaFile->attribute( "original_filename" ),
+                               "eZVideoFLVType" );
+      }
+>>>>>>> added metadata storage support:datatypes/ezvideoflv/ezvideoflvtype.php
 
             $flvFile = eZVideoFLV::convert( $mediaFile->attribute( 'filename'), $orig_dir );
             if ( is_null( $flvFile ) )
