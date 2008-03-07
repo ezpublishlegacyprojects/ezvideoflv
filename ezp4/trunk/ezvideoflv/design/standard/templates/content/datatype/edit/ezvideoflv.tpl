@@ -10,6 +10,7 @@
     <th>{'Filename'|i18n( 'design/standard/content/datatype' )}</th>
     <th>{'MIME type'|i18n( 'design/standard/content/datatype' )}</th>
     <th>{'Size'|i18n( 'design/standard/content/datatype' )}</th>
+    <th>{'Duration'|i18n( 'design/standard/content/datatype' )}</th>
 </tr>
 <tr>
 	<td rowspan="2" style="width: 120px; text-align: center;">
@@ -21,6 +22,9 @@
 		{$attribute.content.filesize|si( byte )}<br />
 		{$attribute.content.width}x{$attribute.content.height}
 	</td>
+    <td>
+    {$attribute.content.duration}
+   </td>
 </tr>
 <tr>
 	<td>{'FLV version'|i18n( 'ezvideoflv/datatype' )}</td>
@@ -30,6 +34,9 @@
 	{else}
 	<td>{'Not yet generated'|i18n( 'ezvideoflv/datatype' )}</td>
 	{/if}
+    <td>
+    {$attribute.content.duration}
+  </td>
 </tr>
 </table>
 {section-else}
