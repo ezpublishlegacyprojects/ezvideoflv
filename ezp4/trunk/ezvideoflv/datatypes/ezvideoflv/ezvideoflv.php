@@ -451,7 +451,7 @@ class eZVideoFLV extends eZPersistentObject
 
     function getDuration()
     {
-        $duration = ezi18n( 'kernel/classes/datatypes', "Unable to determine duration" );
+        $duration = ezi18n( 'ezvideoflv/datatype', "Unable to determine duration" );
         $metadata = $this->attribute( 'metadata' );
         if ($metadata && is_array( $metadata ) && isset( $metadata['duration'] ) )
           $duration = eZVideoFLV::sec2hms( $metadata['duration'] );

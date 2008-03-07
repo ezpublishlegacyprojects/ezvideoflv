@@ -33,5 +33,13 @@
 		<source>No file</source>
 		<translation>Aucun fichier</translation>
 	</message>
+	<message>
+		<source>Duration</source>
+		<translation>Durée</translation>
+	</message>
+	<message>
+		<source>Unable to determine duration</source>
+		<translation>Impossible de déterminer la durée de la video</translation>
+	</message>
 </context>
 </TS>

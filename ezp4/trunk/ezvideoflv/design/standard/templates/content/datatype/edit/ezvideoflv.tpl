@@ -10,7 +10,7 @@
     <th>{'Filename'|i18n( 'design/standard/content/datatype' )}</th>
     <th>{'MIME type'|i18n( 'design/standard/content/datatype' )}</th>
     <th>{'Size'|i18n( 'design/standard/content/datatype' )}</th>
-    <th>{'Duration'|i18n( 'design/standard/content/datatype' )}</th>
+    <th>{'Duration'|i18n( 'ezvideoflv/datatype' )}</th>
 </tr>
 <tr>
 	<td rowspan="2" style="width: 120px; text-align: center;">
