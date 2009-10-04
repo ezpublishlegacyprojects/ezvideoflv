@@ -1,0 +1,1 @@
+- Based on http://svn.projects.ez.no/ezvideoflv/ezp3/trunk/ rev. 6
