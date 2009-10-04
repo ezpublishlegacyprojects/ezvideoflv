@@ -1,39 +1,42 @@
 {default attribute_base=ContentObjectAttribute}
-
+{**
+ * $Id$
+ * $HeadURL$
+ *}
 {* Current file. *}
 <div class="block">
 <label>{'Current file and its flv version'|i18n( 'ezvideoflv/datatype' )}:</label>
 {section show=$attribute.content.filename}
 <table class="list" cellspacing="0">
 <tr>
-	<th>{'Preview'|i18n( 'ezvideoflv/datatype' )}</th>
+    <th>{'Preview'|i18n( 'ezvideoflv/datatype' )}</th>
     <th>{'Filename'|i18n( 'design/standard/content/datatype' )}</th>
     <th>{'MIME type'|i18n( 'design/standard/content/datatype' )}</th>
     <th>{'Size'|i18n( 'design/standard/content/datatype' )}</th>
     <th>{'Duration'|i18n( 'ezvideoflv/datatype' )}</th>
 </tr>
 <tr>
-	<td rowspan="2" style="width: 120px; text-align: center;">
-	<img src={concat( 'video/preview/', $attribute.contentobject_id,"/",$attribute.content.contentobject_attribute_id )|ezurl()} alt="Preview" width="100" />
-	</td>
+    <td rowspan="2" style="width: 120px; text-align: center;">
+    <img src={concat( 'video/preview/', $attribute.contentobject_id,"/",$attribute.content.contentobject_attribute_id )|ezurl()} alt="Preview" width="100" />
+    </td>
     <td>{$attribute.content.original_filename}</td>
     <td>{$attribute.content.mime_type}</td>
     <td>
-		{$attribute.content.filesize|si( byte )}<br />
-		{$attribute.content.width}x{$attribute.content.height}
-	</td>
+        {$attribute.content.filesize|si( byte )}<br />
+        {$attribute.content.width}x{$attribute.content.height}
+    </td>
     <td>
     {$attribute.content.duration}
    </td>
 </tr>
 <tr>
-	<td>{'FLV version'|i18n( 'ezvideoflv/datatype' )}</td>
-	<td>video/x-flv</td>
-	{if $attribute.content.has_flv}
-	<td>{$attribute.content.filesize_flv|si( byte )}</td>
-	{else}
-	<td>{'Not yet generated'|i18n( 'ezvideoflv/datatype' )}</td>
-	{/if}
+    <td>{'FLV version'|i18n( 'ezvideoflv/datatype' )}</td>
+    <td>video/x-flv</td>
+    {if $attribute.content.has_flv}
+    <td>{$attribute.content.filesize_flv|si( byte )}</td>
+    {else}
+    <td>{'Not yet generated'|i18n( 'ezvideoflv/datatype' )}</td>
+    {/if}
     <td>
     {$attribute.content.duration}
   </td>

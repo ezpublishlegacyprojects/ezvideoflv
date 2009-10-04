@@ -1,9 +1,11 @@
 <?php
-
+//
+// $Id$
+// $HeadURL$
 //
 // SOFTWARE NAME: eZ Video FLV
-// SOFTWARE RELEASE: 0.2
-// COPYRIGHT NOTICE: Copyright (C) 2007 Damien POBEL
+// SOFTWARE RELEASE: 0.3
+// COPYRIGHT NOTICE: Copyright (C) 2007-2009 Damien POBEL
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or

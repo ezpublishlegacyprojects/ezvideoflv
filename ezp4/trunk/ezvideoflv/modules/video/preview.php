@@ -1,10 +1,12 @@
 <?php
-
+//
+// $Id$
+// $HeadURL$
 //
 // SOFTWARE NAME: eZ Video FLV
-// SOFTWARE RELEASE: 0.2
+// SOFTWARE RELEASE: 0.3
 // COPYRIGHT NOTICE: Copyright (C)    1999-2006 eZ Systems AS
-//                                     2007 Damien POBEL
+//                                    2007-2009 Damien POBEL
 // BASED ON: download.php
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -22,10 +24,6 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
-
-
-
-//$extension_dir = eZExtension::baseDirectory();
 
 $contentObjectID = $Params['ContentObjectID'];
 $contentObjectAttributeID = $Params['ContentObjectAttributeID'];

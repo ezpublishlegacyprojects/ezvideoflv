@@ -1,10 +1,12 @@
 <?php
-
+//
+// $Id$
+// $HeadURL$
 //
 // SOFTWARE NAME: eZ Video FLV
-// SOFTWARE RELEASE: 0.2
+// SOFTWARE RELEASE: 0.3
 // COPYRIGHT NOTICE: Copyright (C) 1999-2006 eZ Systems AS
-//                                    2007 Damien POBEL
+//                                 2007-2009 Damien POBEL
 // BASED ON: ezmediatype.php from eZ Publish 3.10rc1
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >

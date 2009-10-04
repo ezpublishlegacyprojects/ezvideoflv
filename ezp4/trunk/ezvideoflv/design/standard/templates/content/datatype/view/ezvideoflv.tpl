@@ -1,12 +1,14 @@
-{def
-    $width=$attribute.content.width
-    $height=$attribute.content.height
-    $flv=concat( 'video/flv/', $attribute.contentobject_id,"/",$attribute.content.contentobject_attribute_id )
-    $preview=concat( 'video/preview/', $attribute.contentobject_id,"/",$attribute.content.contentobject_attribute_id )
-    $player=ezini( 'FLVPlayer', 'File', 'ezvideoflv.ini' )
-    $options=ezini( 'FLVPlayer', 'Options', 'ezvideoflv.ini' )
-    $opt_string=''
-}
+{**
+ * $Id$
+ * $HeadURL$
+ *}
+{def $width=$attribute.content.width
+     $height=$attribute.content.height
+     $flv=concat( 'video/flv/', $attribute.contentobject_id,"/",$attribute.content.contentobject_attribute_id )
+     $preview=concat( 'video/preview/', $attribute.contentobject_id,"/",$attribute.content.contentobject_attribute_id )
+     $player=ezini( 'FLVPlayer', 'File', 'ezvideoflv.ini' )
+     $options=ezini( 'FLVPlayer', 'Options', 'ezvideoflv.ini' )
+     $opt_string=''}
 {if $attribute.has_content}
     {if $attribute.content.has_flv}
         {foreach $options as $key => $value}

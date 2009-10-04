@@ -1,3 +1,6 @@
+-- $Id$
+-- $HeadURL$
+
 CREATE TABLE ezvideoflv (
   contentobject_attribute_id int(11) NOT NULL default '0',
   filename varchar(255) NOT NULL default '',
