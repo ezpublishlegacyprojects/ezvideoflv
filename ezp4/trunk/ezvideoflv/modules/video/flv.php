@@ -44,8 +44,8 @@ if ( $contentObjectID != $contentObjectIDAttr or !$contentObject->attribute( 'ca
 {
     return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 }
-$fileHandler = eZBinaryFileHandler::instance( 'ezflv' );
-$result = $fileHandler->handleDownload( $contentObject, $contentObjectAttribute, eZBinaryFileHandler::TYPE_FILE );
+$fileHandler = eZBinaryFileHandler::instance();
+$result = $fileHandler->handleDownload( $contentObject, $contentObjectAttribute, eZVideoFLVHandler::TYPE_FLV );
 
 if ( $result == eZBinaryFileHandler::RESULT_UNAVAILABLE )
 {

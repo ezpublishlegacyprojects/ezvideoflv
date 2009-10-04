@@ -115,7 +115,7 @@ class eZVideoFLV extends eZPersistentObject
         $format = $ini->variable( 'Preview', 'Format' );
         $frame = $ini->variable( 'Preview', 'Frame' );
         $oldumask = umask( 0 );
-        if ( !eZDir::mkdir( $preview_dir, false, true ) )
+        if ( !is_dir( $preview_dir ) && !eZDir::mkdir( $preview_dir, false, true ) )
         {
             eZDebug::writeError( "Can't create $preview_dir", 'eZVideoFLV' );
             umask( $oldumask );
@@ -123,7 +123,6 @@ class eZVideoFLV extends eZPersistentObject
         }
         umask( $oldumask );
 
-        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $videoFile = eZClusterFileHandler::instance( $fileInfo['filepath'] );
         if ( ! $videoFile->exists() )
             return '';
@@ -158,7 +157,6 @@ class eZVideoFLV extends eZPersistentObject
         $ret = @call_user_func( $function, $gd_image, $imgPath );
         if ( $ret )
         {
-            //require_once( 'kernel/classes/ezclusterfilehandler.php' );
             $fileHandler = eZClusterFileHandler::instance();
             $fileHandler->fileStore( $imgPath, 'media', true, 'image/' . $format );
             return $imgPath;
@@ -170,8 +168,6 @@ class eZVideoFLV extends eZPersistentObject
     function fileSizeFLV()
     {
         $fileInfo = $this->storedFileInfo();
-        // VS-DBFILE
-        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( $fileInfo['filepath_flv'] );
 
         if ( $file->exists() )
@@ -185,8 +181,6 @@ class eZVideoFLV extends eZPersistentObject
     {
         $fileInfo = $this->storedFileInfo();
 
-        // VS-DBFILE
-        //require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( $fileInfo['filepath'] );
 
         if ( $file->exists() )
@@ -202,7 +196,7 @@ class eZVideoFLV extends eZPersistentObject
         return $fileInfo['filepath'];
     }
 
-    function &filePathFLV()
+    function filePathFLV()
     {
         $fileInfo = $this->storedFileInfo();
         return $fileInfo['filepath_flv'];
@@ -290,7 +284,8 @@ class eZVideoFLV extends eZPersistentObject
         }
     }
 
-    /** Get the FFMPEG_Movie object from a video file
+    /**
+     * Get the FFMPEG_Movie object from a video file
      * @return FFMPEG_Movie object
      */
     static function getFFMPEGObject( $videoFile )
@@ -300,7 +295,8 @@ class eZVideoFLV extends eZPersistentObject
         return $ffmpeg;
     }
 
-    /** Check if ffmpeg.so is loaded and try to load if necessary
+    /**
+     * Check if ffmpeg.so is loaded and try to load if necessary
      */
     static function loadFFMPEG()
     {
@@ -334,7 +330,8 @@ class eZVideoFLV extends eZPersistentObject
         return null;
     }
 
-    /** Convert the video file to FLV and return the filename of the new file
+    /**
+     * Convert the video file to FLV and return the filename of the new file
      * @param $videoFile : full path of the original file
      * @param $destinationPath : where to put the flv file
      */
@@ -369,7 +366,8 @@ class eZVideoFLV extends eZPersistentObject
         return $flvFile;
     }
 
-    /** Build the command line according to settings
+    /**
+     * Build the command line according to settings
      * @param $original_file : original full file path
      * @param $converted_file : converted full file path
      */
@@ -492,7 +490,7 @@ class eZVideoFLV extends eZPersistentObject
 
         // done!
         return $hms;
-  }
+    }
 
 
     public $ContentObjectAttributeID;
